@@ -7,4 +7,3 @@ DATA = {
     'PATH': getenv('PATH'),
     'TABLE': getenv('TABLE_SERVERS')
 }
-
