@@ -1,5 +1,7 @@
 import sqlite3 as sq
 
+from logs import info
+
 PATH = './data.db'
 TABLE = 'servers'
 
@@ -24,6 +26,7 @@ def init_server(id_: int,
     :param level:
     :return: None
     """
+
     level = level.lower()
     with sq.connect(PATH) as conn:
         cur = conn.cursor()
@@ -35,6 +38,7 @@ def get_servers() -> dict:
     Получаем все сервера базы данных, где возвращается словарь {id: тариф}
     :return: dict
     """
+    info('Get all servers')
     with sq.connect(PATH) as conn:
         cur = conn.cursor()
         cur.execute(f"SELECT * FROM {TABLE}")
@@ -53,6 +57,7 @@ def update_level(id_: int, new_level: str):
     :param new_level:
     :return: None
     """
+    info('Update server level')
     with sq.connect(PATH) as conn:
         cur = conn.cursor()
         cur.execute(f"UPDATE {TABLE} SET level = '{new_level}' WHERE id = {id_}")
@@ -64,6 +69,7 @@ def delete_server(id_: int):
     :param id_:
     :return: None
     """
+    info('Delete server')
     with sq.connect(PATH) as conn:
         cur = conn.cursor()
         cur.execute(f"DELETE FROM {TABLE} WHERE id = {id_}")

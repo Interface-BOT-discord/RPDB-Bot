@@ -5,6 +5,8 @@ from disnake.ext import commands
 
 from database import init_server, delete_server
 
+from logs import info
+
 guilds = [1247566813500543099, 1227280685526552656]
 
 
@@ -20,6 +22,7 @@ class Interface_Bot(commands.InteractionBot):
         print(disnake.__version__)
 
     async def on_guild_join(self, guild: disnake.Guild):
+        info(f'Join guild {guild.name}({guild.id})')
         owner = guild.owner
         emb = disnake.Embed(
             title=f'{guild.name} + RPDB = Автоматизированный проект',
@@ -35,6 +38,7 @@ class Interface_Bot(commands.InteractionBot):
         await owner.send('Initialization complete')
 
     async def on_guild_remove(self, guild: disnake.Guild):
+        info(f'Remove guild {guild.name}({guild.id})')
         owner = guild.owner
         emb = disnake.Embed(
             title='Пока!',
@@ -46,6 +50,7 @@ class Interface_Bot(commands.InteractionBot):
         await owner.send(embed=emb)
 
     def load_cog(self, path: str):
+        info('Cog loading started')
         for file in pkgutil.iter_modules([path]):
             try:
                 self.load_extension(f'cogs.{file.name}')

@@ -24,6 +24,21 @@ class Information(commands.Cog):
             await ctx.author.send(embed=embed)
         # TODO: Create a commands list
 
+    @commands.slash_command(name='echo', description='Отправляет сообщение в канал')
+    async def echo(self, ctx: disnake.ApplicationCommandInteraction,
+                   msg: str,
+                   channel: disnake.TextChannel = None):
+        if ctx.author.guild_permissions.manage_messages:
+            if channel is None:
+                await ctx.send('Отправляю!', ephemeral=True)
+                channel = ctx.channel
+                await channel.send(msg)
+            else:
+                await ctx.send('Отправляю!', ephemeral=True)
+                await channel.send()
+        else:
+            await ctx.send('Недостаточно прав', ephemeral=True)
+
 
 def setup(bot):
     bot.add_cog(Information(bot))
