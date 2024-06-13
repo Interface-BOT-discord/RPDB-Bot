@@ -29,6 +29,9 @@ class Information(commands.Cog):
                    msg: str,
                    channel: disnake.TextChannel = None):
         if ctx.author.guild_permissions.manage_messages:
+            if msg is None or msg == ' ':
+                await ctx.send('Нельзя отправить пустое сообщение!', ephemeral=True)
+                return
             if channel is None:
                 await ctx.send('Отправляю!', ephemeral=True)
                 channel = ctx.channel

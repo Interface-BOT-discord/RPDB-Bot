@@ -3,7 +3,7 @@ import pkgutil
 import disnake
 from disnake.ext import commands
 
-from database import init_server, delete_server
+from database import init_server
 
 from logs import info
 
@@ -59,3 +59,4 @@ class Interface_Bot(commands.InteractionBot):
                 with open('log.txt', 'w') as f:
                     f.write(f'{str(e)}\n')
                 print(f'Failed to load {file.name} ({type(e).__name__} (FULL IN log.txt))')
+
