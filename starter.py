@@ -1,7 +1,7 @@
 from os import getenv
 import dotenv
 
-from utils import Interface_Bot
+from utils import RPDBBot
 from logs import debug, info
 
 
@@ -9,7 +9,7 @@ if __name__ == '__main__':
     debug('Load .env')
     dotenv.load_dotenv()
 
-    bot = Interface_Bot()
+    bot = RPDBBot()
     bot.load_cog('cogs')
     bot.load_cog('morphs_operations')
     bot.prefix = getenv('PREFIX')

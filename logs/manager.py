@@ -5,10 +5,10 @@ from loguru import logger
 logger.remove()
 logger.add('logs/logs/log.log',
            level="DEBUG",
-           rotation="1 MB",
+           rotation="10 KB",
            compression="zip",
            format="{time} - {level}: {message}")
-logger.add(sys.stderr, level="INFO", format="{level} | {message}")
+logger.add(sys.stderr, level="WARNING", format="{level} | {message}")
 
 
 def debug(msg):

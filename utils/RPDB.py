@@ -10,7 +10,7 @@ from logs import info
 guilds = [1247566813500543099, 1227280685526552656]
 
 
-class Interface_Bot(commands.InteractionBot):
+class RPDBBot(commands.InteractionBot):
     def __init__(self):
         super().__init__(
             intents=disnake.Intents.all(),

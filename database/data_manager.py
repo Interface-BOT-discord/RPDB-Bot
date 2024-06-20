@@ -1,9 +1,10 @@
 import sqlite3 as sq
 
-from logs import info
+from logs import info, error
 
 PATH = './data.db'
 TABLE = 'servers'
+MORPHS = 'morphs'
 
 # Create DB
 #
@@ -73,3 +74,63 @@ def delete_server(id_: int):
     with sq.connect(PATH) as conn:
         cur = conn.cursor()
         cur.execute(f"DELETE FROM {TABLE} WHERE id = {id_}")
+
+
+def add_morph(data: dict) -> bool:
+    """
+    Создает морф
+    :param data:
+    :return bool:
+    """
+    info('Add morph')
+    try:
+        with sq.connect(PATH) as conn:
+            cur = conn.cursor()
+            cur.execute(f"""INSERT INTO {MORPHS} VALUES ('{data['id']}', '{data['morph']}', '{data['people']}',
+            '{data['inspector']}', '{data['structure']}', 'active')""")
+    except Exception as e:
+        error(f'{e} DATABASE')
+        return False
+    return True
+
+
+def del_morph(id_) -> bool:
+    """
+    Удаляет морф из БД
+    :param id_:
+    :return bool:
+    """
+    info('Delete morph')
+    try:
+        with sq.connect(PATH) as conn:
+            cur = conn.cursor()
+            cur.execute(f"DELETE FROM {MORPHS} WHERE id = '{id_}'")
+    except Exception as e:
+        error(f'{e} DATABASE')
+        return False
+    return True
+
+
+def get_morphs(id_: str) -> dict:
+    """
+    Get Morph
+    :param id_:
+    :return dict:
+    """
+    info('Get morphs')
+    try:
+        with sq.connect(PATH) as conn:
+            cur = conn.cursor()
+            cur.execute(f"SELECT * FROM {MORPHS} WHERE id = {id_}")
+            morph = cur.fetchone()
+    except Exception as e:
+        error(f'{e} DATABASE')
+        return {'error': e}
+    return {
+        'id': id_,
+        'morph': morph[1],
+        'people': morph[2],
+        'inspector': morph[3],
+        'structure': morph[4],
+        'status': morph[5]
+    }

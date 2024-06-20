@@ -1,5 +1,9 @@
+from datetime import datetime
+
 import disnake
 from disnake import TextInputStyle
+
+from requests import add
 
 
 class MyModal(disnake.ui.Modal):
@@ -51,8 +55,9 @@ class MyModal(disnake.ui.Modal):
             "people": values["people"],
             "inspector": inter.author.id,
             "structure": values["structure"],
-            "status": "active"
         }
+
+
 
     async def on_error(self, interaction: disnake.MessageInteraction, error):
         embed = disnake.Embed(

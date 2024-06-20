@@ -80,3 +80,4 @@ cython_debug/
 .idea/
 
 /database/data.db
+/config/

@@ -1,8 +1,6 @@
 import disnake
 from disnake.ext import commands
 
-helper = disnake.ApplicationCommandInteraction
-
 
 class Information(commands.Cog):
     def __init__(self, bot):
@@ -10,7 +8,7 @@ class Information(commands.Cog):
 
     @commands.slash_command(name='help', description='Получить информацию о боте и проекте')
     async def help(self,
-                   ctx: disnake.ApplicationCommandInteraction,
+                   ctx: disnake.AppCmdInter,
                    dm: str = commands.Param(name='в_личку', choices=['да', 'нет'])):
         embed = disnake.Embed(title='Сводка о боте',
                               description='Interface & EraserColor : RPDB \n'
