@@ -2,7 +2,7 @@ import sqlite3 as sq
 
 from logs import info, error
 
-PATH = './data.db'
+PATH = 'database/data.db'
 TABLE = 'servers'
 MORPHS = 'morphs'
 
@@ -94,6 +94,10 @@ def add_morph(data: dict) -> bool:
     return True
 
 
+def add_(data):
+    return add_morph(data)
+
+
 def del_morph(id_) -> bool:
     """
     Удаляет морф из БД
@@ -111,6 +115,10 @@ def del_morph(id_) -> bool:
     return True
 
 
+def del_(id_):
+    return del_morph(id_)
+
+
 def get_morphs(id_: str) -> dict:
     """
     Get Morph
@@ -121,12 +129,13 @@ def get_morphs(id_: str) -> dict:
     try:
         with sq.connect(PATH) as conn:
             cur = conn.cursor()
-            cur.execute(f"SELECT * FROM {MORPHS} WHERE id = {id_}")
+            cur.execute(f"SELECT * FROM {MORPHS} WHERE id = '{id_}'")
             morph = cur.fetchone()
     except Exception as e:
         error(f'{e} DATABASE')
         return {'error': e}
     return {
+        'error': None,
         'id': id_,
         'morph': morph[1],
         'people': morph[2],
@@ -134,3 +143,7 @@ def get_morphs(id_: str) -> dict:
         'structure': morph[4],
         'status': morph[5]
     }
+
+
+def get_(id_):
+    return get_morphs(id_)

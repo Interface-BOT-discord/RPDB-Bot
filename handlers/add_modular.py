@@ -3,7 +3,8 @@ from datetime import datetime
 import disnake
 from disnake import TextInputStyle
 
-from requests import add
+from database.data_manager import add_
+from logs import info, error
 
 
 class MyModal(disnake.ui.Modal):
@@ -57,11 +58,19 @@ class MyModal(disnake.ui.Modal):
             "structure": values["structure"],
         }
 
-
-
-    async def on_error(self, interaction: disnake.MessageInteraction, error):
-        embed = disnake.Embed(
-            title="Ошибка взаимодействия!"
-        )
-        embed.add_field(name='Error:', value=str(error))
-        interaction.response.send_message(embed=embed)
+        if add_(data):
+            info(f'Morph {data["id"]} has been added')
+            await inter.response.send_message(embed=disnake.Embed(
+                title='Морф создан!',
+                description=f'Ваш морф с ID {data["id"]} был создан!',
+                color=disnake.Color.green(),
+                timestamp=datetime.now()
+            ))
+        else:
+            info(f'Morph {data["data"]} not added')
+            await inter.response.send_message(embed=disnake.Embed(
+                title='Морф не создан!',
+                description=f'Ваш морф с ID {data["id"]} не был создан! Из за сбоя в базе данных',
+                color=disnake.Color.green(),
+                timestamp=datetime.now()
+            ))
