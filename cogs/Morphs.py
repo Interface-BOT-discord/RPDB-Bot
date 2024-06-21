@@ -29,26 +29,27 @@ class Morphs(commands.Cog):
     async def remove_morph(self, interaction: disnake.AppCmdInter,
                      id_: str = commands.Param(description='morph id')):
         if interaction.author.guild_permissions == disnake.Permissions.manage_guild or interaction.author.id in devs.devs:
+            if del_(id_):
+                await interaction.send(embed=disnake.Embed(
+                    title='Ваш морф был удален!',
+                    description=f'Морфа с ID {id_} больше не существует!',
+                    color=0xff0000,
+                    timestamp=datetime.now()
+                ))
+            else:
+                await interaction.send(embed=disnake.Embed(
+                    title='Ой',
+                    description='Произошла ошибка на стороне базы данных!',
+                    color=disnake.Color.dark_red()
+                ))
+            return
+        else:
             await interaction.send(embed=disnake.Embed(
                 title='Ой',
                 description='У вас нет прав, чтобы сделать это!',
                 color=0x580000
             ))
             return
-
-        if del_(id_):
-            await interaction.send(embed=disnake.Embed(
-                title='Ваш морф был удален!',
-                description=f'Морфа с ID {id_} больше не существует!',
-                color=0xff0000,
-                timestamp=datetime.now()
-            ))
-        else:
-            await interaction.send(embed=disnake.Embed(
-                title='Ой',
-                description='Произошла ошибка на стороне базы данных!',
-                color=disnake.Color.dark_red()
-            ))
 
     @commands.slash_command(name='get', description='Получить морф из базы данных')
     async def get_morph(self, interaction: disnake.AppCmdInter,

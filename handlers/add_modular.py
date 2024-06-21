@@ -32,7 +32,7 @@ class MyModal(disnake.ui.Modal):
                 placeholder="Enter member ID.",
                 custom_id="people",
                 style=TextInputStyle.short,
-                max_length=16
+                max_length=32
             ),
             disnake.ui.TextInput(
                 label="structure",
@@ -51,7 +51,7 @@ class MyModal(disnake.ui.Modal):
     async def callback(self, inter: disnake.ModalInteraction):
         values = inter.text_values
         data = {
-            "id": values["id"],
+            "id": values["id"].lower(),
             "morph": values["morph"],
             "people": values["people"],
             "inspector": inter.author.id,

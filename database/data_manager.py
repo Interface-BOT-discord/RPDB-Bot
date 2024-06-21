@@ -147,3 +147,4 @@ def get_morphs(id_: str) -> dict:
 
 def get_(id_):
     return get_morphs(id_)
+
