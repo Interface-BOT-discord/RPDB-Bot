@@ -11,7 +11,6 @@ if __name__ == '__main__':
 
     bot = RPDBBot()
     bot.load_cog('cogs')
-    bot.load_cog('morphs_operations')
     bot.prefix = getenv('PREFIX')
     info('Bot run')
     bot.run(getenv('TOKEN'))

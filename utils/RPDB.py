@@ -5,7 +5,7 @@ from disnake.ext import commands
 
 from database import init_server
 
-from logs import info
+from logs import info, critical
 
 guilds = [1247566813500543099, 1227280685526552656]
 
@@ -59,4 +59,5 @@ class RPDBBot(commands.InteractionBot):
                 with open('log.txt', 'w') as f:
                     f.write(f'{str(e)}\n')
                 print(f'Failed to load {file.name} ({type(e).__name__} (FULL IN log.txt))')
+                critical('Cant load all cogs')
 
