@@ -77,5 +77,6 @@ class Morphs(commands.Cog):
         await interaction.send(embed=embed)
         return
 
+
 def setup(bot):
     bot.add_cog(Morphs(bot))

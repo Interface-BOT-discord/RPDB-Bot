@@ -134,15 +134,18 @@ def get_morphs(id_: str) -> dict:
     except Exception as e:
         error(f'{e} DATABASE')
         return {'error': e}
-    return {
-        'error': None,
-        'id': id_,
-        'morph': morph[1],
-        'people': morph[2],
-        'inspector': morph[3],
-        'structure': morph[4],
-        'status': morph[5]
-    }
+    if morph is not None:
+        return {
+            'error': None,
+            'id': id_,
+            'morph': morph[1],
+            'people': morph[2],
+            'inspector': morph[3],
+            'structure': morph[4],
+            'status': morph[5]
+        }
+    else:
+        return {'error': 'Morph is exist'}
 
 
 def get_(id_):

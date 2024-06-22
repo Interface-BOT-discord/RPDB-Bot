@@ -2,8 +2,9 @@ from datetime import datetime
 
 import disnake
 from disnake import TextInputStyle
+from disnake.ext import commands
 
-from database.data_manager import add_
+from database.data_manager import add_, get_
 from logs import info, error
 
 
@@ -57,20 +58,31 @@ class MyModal(disnake.ui.Modal):
             "inspector": inter.author.id,
             "structure": values["structure"],
         }
-
-        if add_(data):
-            info(f'Morph {data["id"]} has been added')
+        if get_(data['id']) is None:
             await inter.response.send_message(embed=disnake.Embed(
-                title='Морф создан!',
-                description=f'Ваш морф с ID {data["id"]} был создан!',
-                color=disnake.Color.green(),
+                title='Ой!',
+                description=f'Ваш морф с ID {data["id"]} не был создан! такой ID уже есть',
+                color=disnake.Color.red(),
                 timestamp=datetime.now()
             ))
         else:
-            info(f'Morph {data["data"]} not added')
-            await inter.response.send_message(embed=disnake.Embed(
-                title='Морф не создан!',
-                description=f'Ваш морф с ID {data["id"]} не был создан! Из за сбоя в базе данных',
-                color=disnake.Color.green(),
-                timestamp=datetime.now()
-            ))
+            if add_(data):
+                info(f'Morph {data["id"]} has been added')
+                await inter.response.send_message(embed=disnake.Embed(
+                    title='Морф создан!',
+                    description=f'Ваш морф с ID {data["id"]} был создан!',
+                    color=disnake.Color.green(),
+                    timestamp=datetime.now()
+                ))
+                user = inter.guild.get_member(int(data['people']))
+                role = inter.guild.get_role(1254095605152747731)
+                await user.add_roles(role)
+
+            else:
+                info(f'Morph {data["data"]} not added')
+                await inter.response.send_message(embed=disnake.Embed(
+                    title='Морф не создан!',
+                    description=f'Ваш морф с ID {data["id"]} не был создан! Из за сбоя в базе данных',
+                    color=disnake.Color.green(),
+                    timestamp=datetime.now()
+                ))
