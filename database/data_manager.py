@@ -145,7 +145,7 @@ def get_morphs(id_: str) -> dict:
             'status': morph[5]
         }
     else:
-        return {'error': 'Morph is exist'}
+        return {'error': 'morph is not exist'}
 
 
 def get_(id_):
